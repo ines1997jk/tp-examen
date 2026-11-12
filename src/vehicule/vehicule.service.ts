@@ -1,19 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateVehiculeDto } from './dto/create-vehicule.dto.js';
 import { UpdateVehiculeDto } from './dto/update-vehicule.dto.js';
+import { Vehicule } from './entities/vehicule.entity.js';
 
 @Injectable()
 export class VehiculeService {
-  create(createVehiculeDto: CreateVehiculeDto) {
-    return 'This action adds a new vehicule';
+    private Vehicules : Vehicule[] =[
+      {id: 1 , brand: "Tesla", price: 400 ,isElectric: true },
+      {id: 2 , brand: "Ford", price: 150 ,isElectric: false },
+
+    ];
+    private nextId = 3;
+  
+  findAll() : Vehicule[] {
+    return this.Vehicules;
   }
 
-  findAll() {
-    return `This action returns all vehicule`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} vehicule`;
+  findOne(id: number) : Vehicule {
+    const vehicule = this.Vehicules.find((p)=> p.id === id);
+    if(!vehicule){throw new NotFoundException(`Vehicule ${id} introuvable`)};
+    return vehicule;
   }
 
   update(id: number, updateVehiculeDto: UpdateVehiculeDto) {

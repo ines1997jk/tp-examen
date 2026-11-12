@@ -9,7 +9,6 @@ export class VehiculeController {
 
   @Post()
   create(@Body() createVehiculeDto: CreateVehiculeDto) {
-    return this.vehiculeService.create(createVehiculeDto);
   }
 
   @Get()
